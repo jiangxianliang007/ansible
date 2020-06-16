@@ -1,0 +1,30 @@
+- hosts: CKB-Mainnet
+  tasks:
+  - name: create a new host 
+    local_action:
+      module: zabbix_host
+      server_url: http://x.x.x.x:81/zabbix
+      login_user: Admin
+      login_password: 9xRrVPg1Tw+28#zox
+      force: yes
+      #host_name: "{{ ansible_default_ipv4.address }}"
+      host_name:  "CKB-Mainnet-node-{{ inventory_hostname }}"
+      visible_name: "CKB-Mainnet-{{ inventory_hostname }}"
+      #visible_name: "{{ ansible_default_ipv4.address }}"
+      host_groups:
+        - Linux servers
+        - CKB-Mainnet
+      link_templates:
+        - Template OS Linux
+        - Templates_ckb_process
+      status: enabled
+      state: present
+      inventory_mode: automatic
+      interfaces:
+        - type: 1
+          main: 1
+          useip: 1
+          ip: "{{ inventory_hostname }}"
+          #ip: "{{ ansible_default_ipv4.address }}"
+          dns: ""
+          port: 10050
